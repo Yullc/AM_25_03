@@ -5,15 +5,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+
     static List<Article> articles = new ArrayList<>();
+
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
         System.out.println("==프로그램 시작==");
 
-        int lastArticleId =3;
-
+        int lastArticleId = 3;
 
         makeTestData();
 
@@ -65,14 +66,7 @@ public class Main {
 
                 int id = Integer.parseInt(cmd.split(" ")[2]);
 
-                Article foundArticle = null;
-
-                for (Article article : articles) {
-                    if (article.getId() == id) {
-                        foundArticle = article;
-                        break;
-                    }
-                }
+                Article foundArticle = getArticleById(id);
 
                 if (foundArticle == null) {
                     System.out.println("해당 게시글은 없습니다");
@@ -89,14 +83,7 @@ public class Main {
 
                 int id = Integer.parseInt(cmd.split(" ")[2]);
 
-                Article foundArticle = null;
-
-                for (Article article : articles) {
-                    if (article.getId() == id) {
-                        foundArticle = article;
-                        break;
-                    }
-                }
+                Article foundArticle = getArticleById(id);
 
                 if (foundArticle == null) {
                     System.out.println("해당 게시글은 없습니다");
@@ -109,14 +96,7 @@ public class Main {
 
                 int id = Integer.parseInt(cmd.split(" ")[2]);
 
-                Article foundArticle = null;
-
-                for (Article article : articles) {
-                    if (article.getId() == id) {
-                        foundArticle = article;
-                        break;
-                    }
-                }
+                Article foundArticle = getArticleById(id);
 
                 if (foundArticle == null) {
                     System.out.println("해당 게시글은 없습니다");
@@ -144,14 +124,31 @@ public class Main {
         System.out.println("==프로그램 끝==");
         sc.close();
     }
-    /** 테스트데이터 함수 **/
-    public static void makeTestData() {
-        System.out.println("==테스트 데이터 생성");
-        articles.add(new Article(1,"2024-12-05 12:12:12","2024-12-05 12:12:12","제목 1","내용 1"));
 
-        articles.add(new Article(2,Util.getNowStr(),Util.getNowStr(),"제목 2","내용 2"));
+    private static Article getArticleById(int id) {
+//        for (int i = 0; i < articles.size(); i++) {
+//            Article article = articles.get(i);
+//            if (article.getId() == id) {
+//                return article;
+//            }
+//        }
 
-        articles.add(new Article(3,Util.getNowStr(),Util.getNowStr(),"제목 3","내용 3"));
+        for (Article article : articles) {
+            if (article.getId() == id) {
+                return article;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 테스트 데이터 생성 함수
+     **/
+    private static void makeTestData() {
+        System.out.println("==테스트 데이터 생성==");
+        articles.add(new Article(1, "2024-12-12 12:12:12", "2024-12-12 12:12:12", "제목1", "내용1"));
+        articles.add(new Article(2, Util.getNowStr(), Util.getNowStr(), "제목2", "내용2"));
+        articles.add(new Article(3, Util.getNowStr(), Util.getNowStr(), "제목3", "내용3"));
     }
 }
 
