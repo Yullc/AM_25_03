@@ -1,4 +1,4 @@
-package org.example.ArticleMananger;
+package org.example.ArticleManager;
 
 import org.example.controller.ArticleController;
 import org.example.controller.Controller;
@@ -45,6 +45,31 @@ public class App {
 
             String actionMethodName = cmdBits[1];
 
+            String forLoginCheck = controllerName + "/" + actionMethodName;
+
+            switch (forLoginCheck) {
+                case "article/write":
+                case "article/delete":
+                case "article/modify":
+                case "member/logout":
+                    if (Controller.isLogined() == false) {
+                        System.out.println("로그인 필요해");
+                        continue;
+                    }
+                    break;
+            }
+
+            switch (forLoginCheck) {
+                case "member/login":
+                case "member/join":
+                    if (Controller.isLogined()) {
+                        System.out.println("로그아웃 필요해");
+                        continue;
+                    }
+                    break;
+            }
+
+
             if (controllerName.equals("article")) {
                 controller = articleController;
             } else if (controllerName.equals("member")) {
@@ -56,21 +81,6 @@ public class App {
 
             controller.doAction(cmd, actionMethodName);
 
-            //            if (cmd.equals("member join")) {
-//                memberController.doJoin();
-//            } else if (cmd.equals("article write")) {
-//                articleController.doWrite();
-//            } else if (cmd.startsWith("article list")) {
-//                articleController.showList(cmd);
-//            } else if (cmd.startsWith("article detail")) {
-//                articleController.showDetail(cmd);
-//            } else if (cmd.startsWith("article delete")) {
-//                articleController.doDelete(cmd);
-//            } else if (cmd.startsWith("article modify")) {
-//                articleController.doModify(cmd);
-//            } else {
-//                System.out.println("사용할 수 없는 명령어입니다");
-//            }
         }
 
         System.out.println("==프로그램 끝==");
