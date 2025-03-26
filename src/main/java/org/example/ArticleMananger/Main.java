@@ -1,4 +1,6 @@
-package org.example;
+package org.example.ArticleMananger;
+
+import org.example.Container;
 
 public class Main {
     public static void main(String[] args) {

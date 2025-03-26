@@ -1,25 +1,46 @@
-package org.example;
+package org.example.controller;
+
+import org.example.dto.Member;
+import org.example.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MemberController {
-    List<Member> members;
+public class MemberController extends Controller {
+
+    private Scanner sc;
+    private List<Member> members;
+    private String cmd;
+
     int lastMemberId = 3;
 
-    public MemberController() {
+    public MemberController(Scanner sc) {
+        this.sc = sc;
         members = new ArrayList<>();
     }
 
-    public void doJoin() {
+    public void doAction(String cmd, String actionMethodName) {
+        this.cmd = cmd;
+
+        switch (actionMethodName) {
+            case "join":
+                doJoin();
+                break;
+            default:
+                System.out.println("Unknown action method");
+                break;
+        }
+    }
+
+    private void doJoin() {
         System.out.println("==회원가입==");
         int id = lastMemberId + 1;
         String regDate = Util.getNowStr();
         String loginId = null;
         while (true) {
             System.out.print("로그인 아이디 : ");
-            loginId = Container.getScanner().nextLine().trim();
+            loginId = sc.nextLine().trim();
             if (isJoinableLoginId(loginId) == false) {
                 System.out.println("이미 사용중이야");
                 continue;
@@ -29,9 +50,9 @@ public class MemberController {
         String password = null;
         while (true) {
             System.out.print("비밀번호 : ");
-            password = Container.getScanner().nextLine().trim();
+            password = sc.nextLine().trim();
             System.out.print("비밀번호 확인: ");
-            String passwordConfirm = Container.getScanner().nextLine().trim();
+            String passwordConfirm = sc.nextLine().trim();
 
             if (password.equals(passwordConfirm) == false) {
                 System.out.println("비번 확인해");
@@ -41,7 +62,7 @@ public class MemberController {
         }
 
         System.out.print("이름 : ");
-        String name = Container.getScanner().nextLine().trim();
+        String name = sc.nextLine().trim();
 
         Member member = new Member(id, regDate, loginId, password, name);
         members.add(member);
@@ -59,7 +80,7 @@ public class MemberController {
         return true;
     }
 
-    void makeTestData() {
+    public void makeTestData() {
         System.out.println("==회원 테스트 데이터 생성==");
         members.add(new Member(1, Util.getNowStr(), "test1", "test1", "test1"));
         members.add(new Member(2, Util.getNowStr(), "test2", "test2", "test2"));
